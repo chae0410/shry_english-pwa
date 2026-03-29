@@ -1,9 +1,10 @@
-const CACHE_NAME = 'amenglish-cache-v1';
+const CACHE_NAME = 'amenglish-cache-v2';
 const APP_SHELL = [
-  './american-english-pwa.html',
-  './manifest.json',
-  './icons/icon-192.png',
-  './icons/icon-512.png'
+  '/shry_english-pwa/',
+  '/shry_english-pwa/index.html',
+  '/shry_english-pwa/manifest.json',
+  '/shry_english-pwa/icons/icon-192.png',
+  '/shry_english-pwa/icons/icon-512.png'
 ];
 
 self.addEventListener('install', event => {
@@ -16,15 +17,14 @@ self.addEventListener('install', event => {
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys =>
-      Promise.all(
-        keys.map(key => key !== CACHE_NAME ? caches.delete(key) : null)
-      )
+      Promise.all(keys.map(key => key !== CACHE_NAME ? caches.delete(key) : null))
     )
   );
   self.clients.claim();
 });
 
 self.addEventListener('fetch', event => {
+  if (event.request.method !== 'GET') return;
   event.respondWith(
     caches.match(event.request).then(cached => cached || fetch(event.request))
   );
