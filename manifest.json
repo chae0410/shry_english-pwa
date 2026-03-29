@@ -2,7 +2,7 @@
   "id": "/shry_english-pwa/",
   "name": "American English Translator",
   "short_name": "AmEnglish",
-  "description": "한국어를 자연스러운 미국식 영어 표현으로 바꿔 쓰는 개인용 번역 PWA",
+  "description": "한국어를 자연스러운 미국식 영어 표현으로 바꾸는 개인용 번역 PWA",
   "lang": "ko",
   "dir": "ltr",
   "start_url": "/shry_english-pwa/index.html",
