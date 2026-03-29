@@ -8,10 +8,13 @@
   <meta name="theme-color" content="#01696f" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="AmEnglish" />
   <meta name="application-name" content="AmEnglish" />
+  <meta name="description" content="한국어를 자연스러운 미국식 영어 표현으로 바꾸는 개인용 번역 앱" />
 
   <link rel="manifest" href="/shry_english-pwa/manifest.json" />
+  <link rel="icon" href="/shry_english-pwa/icons/icon-192.png" />
   <link rel="apple-touch-icon" href="/shry_english-pwa/icons/icon-192.png" />
 
   <style>
@@ -162,17 +165,13 @@
       <div class="btns">
         <button class="primary" id="translateBtn">영어로 바꾸기</button>
         <button class="secondary" id="copyBtn">결과 복사</button>
-        <button class="secondary hidden" id="installBtn">앱으로 설치</button>
+        <button class="secondary hidden" id="installBtn">앱 설치</button>
       </div>
 
       <div class="result" id="result">여기에 결과가 표시됩니다.</div>
 
       <div class="install-box small hidden" id="androidInstallTip">
-        Android에서는 위의 “앱으로 설치” 버튼이 보이면 누르면 됩니다.
-      </div>
-
-      <div class="ios-box small" id="iosTip">
-        iPhone에서는 Safari에서 열고, 공유 버튼 → “홈 화면에 추가”를 누르시면 앱처럼 설치할 수 있습니다.
+        Android Chrome에서는 “앱 설치” 버튼이 나타나면 눌러 설치할 수 있습니다.
       </div>
     </section>
   </main>
@@ -254,9 +253,16 @@
     installBtn.addEventListener('click', async () => {
       if (!deferredPrompt) return;
       deferredPrompt.prompt();
-      await deferredPrompt.userChoice;
+      const choice = await deferredPrompt.userChoice;
+      console.log(choice.outcome);
       deferredPrompt = null;
       installBtn.classList.add('hidden');
+    });
+
+    window.addEventListener('appinstalled', () => {
+      installBtn.classList.add('hidden');
+      androidInstallTip.classList.add('hidden');
+      console.log('PWA installed');
     });
   </script>
 </body>
