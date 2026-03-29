@@ -231,8 +231,15 @@
     });
 
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./service-worker.js');
+      window.addEventListener('load', async () => {
+        try {
+          await navigator.serviceWorker.register('/shry_english-pwa/service-worker.js', {
+            scope: '/shry_english-pwa/'
+          });
+          console.log('Service Worker registered');
+        } catch (e) {
+          console.error('Service Worker registration failed', e);
+        }
       });
     }
 
