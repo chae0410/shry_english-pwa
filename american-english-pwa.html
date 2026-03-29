@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>American English</title>
+
+  <meta name="theme-color" content="#01696f" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="AmEnglish" />
+  <meta name="mobile-web-app-capable" content="yes" />
+
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="apple-touch-icon" href="./icons/icon-192.png" />
+
+  <style>
+    :root{
+      --bg:#f7f6f2;
+      --surface:#f9f8f5;
+      --text:#28251d;
+      --muted:#7a7974;
+      --primary:#01696f;
+      --primary-hover:#0c4e54;
+      --border:#d4d1ca;
+      --shadow:0 10px 24px rgba(0,0,0,.08);
+      --radius:18px;
+    }
+    @media (prefers-color-scheme: dark){
+      :root{
+        --bg:#171614;
+        --surface:#1c1b19;
+        --text:#cdccca;
+        --muted:#9a9995;
+        --primary:#4f98a3;
+        --primary-hover:#227f8b;
+        --border:#393836;
+        --shadow:0 12px 32px rgba(0,0,0,.28);
+      }
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      min-height:100dvh;
+    }
+    .wrap{
+      max-width:760px;
+      margin:0 auto;
+      padding:20px 16px 40px;
+    }
+    .card{
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:18px;
+    }
+    h1{
+      font-size:28px;
+      margin:0 0 8px;
+    }
+    p{
+      margin:0 0 14px;
+      color:var(--muted);
+      line-height:1.55;
+    }
+    label{
+      display:block;
+      font-size:14px;
+      font-weight:600;
+      margin:14px 0 8px;
+    }
+    textarea, select{
+      width:100%;
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:14px;
+      font:inherit;
+      background:#fff;
+      color:#111;
+    }
+    @media (prefers-color-scheme: dark){
+      textarea, select{
+        background:#23211f;
+        color:#f2f2f2;
+      }
+    }
+    textarea{
+      min-height:140px;
+      resize:vertical;
+    }
+    .btns{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:16px;
+    }
+    button{
+      border:0;
+      border-radius:14px;
+      padding:14px 16px;
+      min-height:48px;
+      font:inherit;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .primary{
+      background:var(--primary);
+      color:#fff;
+    }
+    .primary:hover{background:var(--primary-hover)}
+    .secondary{
+      background:transparent;
+      border:1px solid var(--border);
+      color:var(--text);
+    }
+    .result{
+      margin-top:18px;
+      padding:16px;
+      border-radius:16px;
+      border:1px dashed var(--border);
+      min-height:110px;
+      white-space:pre-wrap;
+      line-height:1.6;
+    }
+    .install-box, .ios-box{
+      margin-top:14px;
+      padding:14px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background:rgba(1,105,111,0.06);
+    }
+    .small{
+      font-size:13px;
+      color:var(--muted);
+    }
+    .hidden{display:none}
+    @media (max-width:640px){
+      h1{font-size:24px}
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="card">
+      <h1>American English</h1>
+      <p>한국어를 넣으면 미국인이 실제로 자연스럽게 쓸 법한 영어 표현으로 바꾸는 개인용 번역 앱입니다.</p>
+
+      <label for="tone">톤</label>
+      <select id="tone">
+        <option value="casual">Casual</option>
+        <option value="business">Business</option>
+        <option value="text">Text message</option>
+      </select>
+
+      <label for="input">한국어 입력</label>
+      <textarea id="input" placeholder="예: 오늘은 일정이 좀 빡빡해서 30분 정도 늦을 것 같아요."></textarea>
+
+      <div class="btns">
+        <button class="primary" id="translateBtn">영어로 바꾸기</button>
+        <button class="secondary" id="copyBtn">결과 복사</button>
+        <button class="secondary hidden" id="installBtn">앱으로 설치</button>
+      </div>
+
+      <div class="result" id="result">여기에 결과가 표시됩니다.</div>
+
+      <div class="install-box small hidden" id="androidInstallTip">
+        Android에서는 위의 “앱으로 설치” 버튼이 보이면 누르면 됩니다.
+      </div>
+
+      <div class="ios-box small" id="iosTip">
+        iPhone에서는 Safari에서 열고, 공유 버튼 → “홈 화면에 추가”를 누르시면 앱처럼 설치할 수 있습니다.
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const input = document.getElementById('input');
+    const tone = document.getElementById('tone');
+    const result = document.getElementById('result');
+    const translateBtn = document.getElementById('translateBtn');
+    const copyBtn = document.getElementById('copyBtn');
+    const installBtn = document.getElementById('installBtn');
+    const androidInstallTip = document.getElementById('androidInstallTip');
+
+    function convertText(korean, style){
+      const text = korean.trim();
+      if(!text) return '먼저 한국어 문장을 입력해 주세요.';
+
+      const samples = {
+        "오늘은 일정이 좀 빡빡해서 30분 정도 늦을 것 같아요.": {
+          casual: "My schedule is pretty packed today, so I think I'll be about 30 minutes late.",
+          business: "My schedule is quite tight today, so I expect to be about 30 minutes late.",
+          text: "I’m running about 30 mins late today."
+        },
+        "확인해보고 다시 말씀드릴게요.": {
+          casual: "Let me check and get back to you.",
+          business: "I'll review it and get back to you.",
+          text: "Let me check and I’ll get back to you."
+        }
+      };
+
+      if(samples[text] && samples[text][style]) return samples[text][style];
+
+      return [
+        "[Use this in your AI tool]",
+        "Translate the following Korean into natural American English.",
+        "Do not explain the meaning.",
+        "Output only one natural English version.",
+        `Tone: ${style}`,
+        `Korean: ${text}`
+      ].join("\n");
+    }
+
+    translateBtn.addEventListener('click', () => {
+      result.textContent = convertText(input.value, tone.value);
+    });
+
+    copyBtn.addEventListener('click', async () => {
+      try{
+        await navigator.clipboard.writeText(result.textContent);
+        copyBtn.textContent = '복사됨';
+        setTimeout(()=>copyBtn.textContent='결과 복사',1200);
+      }catch(e){
+        copyBtn.textContent = '복사 실패';
+        setTimeout(()=>copyBtn.textContent='결과 복사',1200);
+      }
+    });
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js');
+      });
+    }
+
+    let deferredPrompt = null;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.classList.remove('hidden');
+      androidInstallTip.classList.remove('hidden');
+    });
+
+    installBtn.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      installBtn.classList.add('hidden');
+    });
+  </script>
+</body>
+</html>

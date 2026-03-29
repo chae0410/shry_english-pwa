@@ -1,0 +1,21 @@
+{
+  "name": "American English Translator",
+  "short_name": "AmEnglish",
+  "start_url": "./american-english-pwa.html",
+  "display": "standalone",
+  "background_color": "#f7f6f2",
+  "theme_color": "#01696f",
+  "description": "한국어를 자연스러운 미국식 영어 표현으로 바꿔 쓰는 개인용 번역 PWA",
+  "icons": [
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
