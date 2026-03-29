@@ -1,7 +1,8 @@
 {
   "name": "American English Translator",
   "short_name": "AmEnglish",
-  "start_url": "./american-english-pwa.html",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#f7f6f2",
   "theme_color": "#01696f",
