@@ -1,22 +1,29 @@
 {
+  "id": "/shry_english-pwa/",
   "name": "American English Translator",
   "short_name": "AmEnglish",
-  "start_url": "./index.html",
-  "scope": "./",
+  "description": "한국어를 자연스러운 미국식 영어 표현으로 바꿔 쓰는 개인용 번역 PWA",
+  "lang": "ko",
+  "dir": "ltr",
+  "start_url": "/shry_english-pwa/index.html",
+  "scope": "/shry_english-pwa/",
   "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
   "background_color": "#f7f6f2",
   "theme_color": "#01696f",
-  "description": "한국어를 자연스러운 미국식 영어 표현으로 바꿔 쓰는 개인용 번역 PWA",
+  "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "./icons/icon-192.png",
+      "src": "/shry_english-pwa/icons/icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "./icons/icon-512.png",
+      "src": "/shry_english-pwa/icons/icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
